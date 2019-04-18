@@ -3,7 +3,7 @@
 var handleDomo = function handleDomo(e, csrf) {
     e.preventDefault();
 
-    $("#domoMessage").animate({ width: "hide" }, 350);
+    $("#messageBox").animate({ width: "hide" }, 350);
 
     if ($("#domoName").val() == '' || $("#domoAge").val() == '') {
         handleError("RAWR! All fields are required");
@@ -159,7 +159,7 @@ $(document).ready(function () {
 
 var handleError = function handleError(messate) {
     $("#errorMessage").text(messate);
-    $("#domoMessage").animate({ width: "toggle" }, 350);
+    $("#messageBox").animate({ width: "toggle" }, 350);
 };
 
 var redirect = function redirect(response) {

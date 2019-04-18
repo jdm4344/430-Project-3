@@ -1,7 +1,7 @@
 const handleDomo = (e, csrf) => {
     e.preventDefault();
 
-    $("#domoMessage").animate({width:"hide"},350);
+    $("#messageBox").animate({width:"hide"},350);
 
     if($("#domoName").val() == '' || $("#domoAge").val() == '') {
         handleError("RAWR! All fields are required");

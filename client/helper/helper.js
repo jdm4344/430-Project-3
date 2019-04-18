@@ -1,6 +1,6 @@
 const handleError = (messate) => {
     $("#errorMessage").text(messate);
-    $("#domoMessage").animate({width:"toggle"}, 350);
+    $("#messageBox").animate({width:"toggle"}, 350);
 };
 
 const redirect = (response) => {
