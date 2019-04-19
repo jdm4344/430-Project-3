@@ -56,7 +56,26 @@ var DomoForm = function DomoForm(props) {
     );
 };
 
-var PostForm = function PostForm(props) {};
+var PostForm = function PostForm(props) {
+    return React.createElement(
+        "form",
+        { id: "postForm", name: "postForm", action: "/maker", method: "POST", "class": "postForm" },
+        React.createElement(
+            "label",
+            { "for": "name" },
+            "Title: "
+        ),
+        React.createElement("input", { id: "postTitle", type: "text", name: "title", placeholder: "Post Title" }),
+        React.createElement(
+            "label",
+            { "for": "content" },
+            "Post Content: "
+        ),
+        React.createElement("textarea", { id: "postContent", type: "text", name: "content", placeholder: "", rows: "10", cols: "50" }),
+        React.createElement("input", { type: "hidden", name: "_csrf", value: "{{csrfToken}}" }),
+        React.createElement("input", { "class": "formSubmit", type: "submit", value: "Post Now" })
+    );
+};
 
 // Sends a POST request to the server to delete a specific domo
 var handleDelete = function handleDelete(e, csrf, domo) {

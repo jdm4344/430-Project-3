@@ -43,7 +43,16 @@ const DomoForm = (props) => {
 };
 
 const PostForm = (props) => {
-
+    return (
+        <form id="postForm" name="postForm" action="/maker" method="POST" class="postForm">
+            <label for="name">Title: </label>
+            <input id="postTitle" type="text" name="title" placeholder="Post Title"/>
+            <label for="content">Post Content: </label>
+            <textarea id="postContent" type="text" name="content" placeholder="" rows="10" cols="50"></textarea>
+            <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
+            <input class="formSubmit" type="submit" value="Post Now" />
+        </form>
+    );
 };
 
 // Sends a POST request to the server to delete a specific domo
