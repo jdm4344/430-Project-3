@@ -78,6 +78,48 @@ const signup = (request, response) => {
   });
 };
 
+// Renders the account page
+const accountPage = (req, res) => {
+  res.render('account', { csrfToken: req.csrfToken() });
+};
+
+// Handles submission of new data for updating a password
+const changePassword = (request, response) => {
+  const req = request;
+  const res = response;
+
+  // cast to strings to cover up some security flaws
+  req.body.password = `${req.body.password}`;
+  req.body.newPass = `${req.body.newPass}`;
+  req.body.newPass2 = `${req.body.newPass2}`;
+
+  if (!req.body.password || !req.body.newPass || !req.body.newPass2) {
+    return res.status(400).json({ message: 'All fields are required' });
+  }
+
+  if (req.body.newPass !== req.body.newPass2) {
+    return res.status(400).json({ message: 'New passwords do not match' });
+  }
+
+  // Authenticate the old password
+  Account.AccountModel.authenticate(req.session.account.username, req.body.password,
+    (err, account) => {
+      if (err) {
+        return res.status(401).json({ message: 'Incorrect password' });
+      } else if (!account) {
+        return res.status(401).json({ message: 'Account not found' });
+      }
+      return res.status(200).json({ message: 'Account found' });
+    });
+
+  // Hash new password
+  Account.AccountModel.generateHash(req.body.newPass, (salt, hash) => {
+    Account.AccountModel.changePassword(req.session.account.username, salt, hash);
+  });
+
+  return res.status(200).json({ message: 'Password updated' });
+};
+
 const getToken = (request, response) => {
   const req = request;
   const res = response;
@@ -94,3 +136,5 @@ module.exports.login = login;
 module.exports.logout = logout;
 module.exports.signup = signup;
 module.exports.getToken = getToken;
+module.exports.accountPage = accountPage;
+module.exports.changePassword = changePassword;

@@ -74,8 +74,23 @@ const editPost = (req, res) => {
   return res.status(200).json({ message: 'Post updated' });
 };
 
+const getPosts = (request, response) => {
+  const req = request;
+  const res = response;
+
+  return Post.PostModel.findByOwner(req.session.account._id, (err, docs) => {
+    if (err) {
+      console.log(err);
+      return res.status(400).json({ error: 'An error occurred' });
+    }
+
+    return res.json({ domos: docs });
+  });
+};
+
 module.exports.makerPage = makerPage;
 module.exports.make = makePost;
+module.exports.getPosts  = getPosts;
 module.exports.editPage = editPage;
 module.exports.editPost = editPost;
 module.exports.deletePost = deletePost;

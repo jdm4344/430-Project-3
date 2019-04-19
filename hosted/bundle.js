@@ -1,65 +1,74 @@
 "use strict";
 
-var handleDomo = function handleDomo(e, csrf) {
+// const handleDomo = (e, csrf) => {
+//     e.preventDefault();
+
+//     $("#messageBox").animate({width:"hide"},350);
+
+//     if($("#domoName").val() == '' || $("#domoAge").val() == '') {
+//         handleError("RAWR! All fields are required");
+//         return false;
+//     }
+
+//     sendAjax("POST", $("#domoForm").attr("action"), $("#domoForm").serialize(), function() {
+//         loadDomosFromServer(csrf);
+//     });
+
+//     return false;
+// };
+
+var handlePost = function handlePost(e, csrf) {
     e.preventDefault();
 
     $("#messageBox").animate({ width: "hide" }, 350);
 
-    if ($("#domoName").val() == '' || $("#domoAge").val() == '') {
-        handleError("RAWR! All fields are required");
+    if ($("#postTitle").val() == '' || $("#postContent").val() == '') {
+        handleError("All fields are required");
         return false;
     }
 
-    sendAjax("POST", $("#domoForm").attr("action"), $("#domoForm").serialize(), function () {
-        loadDomosFromServer(csrf);
+    sendAjax("POST", $("#postForm").attr("action"), $("#postForm").serialize(), function () {
+        loadPostsFromServer(csrf);
     });
 
     return false;
 };
 
-var handlePost = function handlePost(e, csrf) {};
+// const DomoForm = (props) => {
+//     // console.log(`domoForm props: ${props.csrf}`);
 
-var DomoForm = function DomoForm(props) {
-    // console.log(`domoForm props: ${props.csrf}`);
+//     return (
+//         <form id="domoForm" 
+//             name="domoForm"
+//             onSubmit={(e) => handleDomo(e, props.csrf)}
+//             action="/maker"
+//             method="POST"
+//             className="domoForm"
+//           >
+//           <label htmlFor="name">Name: </label>
+//           <input id="domoName" type="text" name="name" placeholder="Domo Name"/>
+//           <label htmlFor="age">Age: </label>
+//           <input id="domoAge" type="text" name="age" placeholder="Domo Age"/>
+//           <label htmlFor="food">Favorite food: </label>
+//           <input id="domoFood" type="text" name="food" placeholder="Domo's favorite food"/>
+//           <input type="hidden" name="_csrf" value={props.csrf}/>
+//           <input className="makeDomoSubmit" type="submit" value="Make Domo"/>
+//         </form>
+//     );
+// };
 
+var PostForm = function PostForm(props) {
     return React.createElement(
         "form",
-        { id: "domoForm",
-            name: "domoForm",
+        { id: "postForm",
+            name: "postForm",
             onSubmit: function onSubmit(e) {
                 return handleDomo(e, props.csrf);
             },
             action: "/maker",
             method: "POST",
-            className: "domoForm"
+            "class": "postForm"
         },
-        React.createElement(
-            "label",
-            { htmlFor: "name" },
-            "Name: "
-        ),
-        React.createElement("input", { id: "domoName", type: "text", name: "name", placeholder: "Domo Name" }),
-        React.createElement(
-            "label",
-            { htmlFor: "age" },
-            "Age: "
-        ),
-        React.createElement("input", { id: "domoAge", type: "text", name: "age", placeholder: "Domo Age" }),
-        React.createElement(
-            "label",
-            { htmlFor: "food" },
-            "Favorite food: "
-        ),
-        React.createElement("input", { id: "domoFood", type: "text", name: "food", placeholder: "Domo's favorite food" }),
-        React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
-        React.createElement("input", { className: "makeDomoSubmit", type: "submit", value: "Make Domo" })
-    );
-};
-
-var PostForm = function PostForm(props) {
-    return React.createElement(
-        "form",
-        { id: "postForm", name: "postForm", action: "/maker", method: "POST", "class": "postForm" },
         React.createElement(
             "label",
             { "for": "name" },
@@ -72,7 +81,7 @@ var PostForm = function PostForm(props) {
             "Post Content: "
         ),
         React.createElement("textarea", { id: "postContent", type: "text", name: "content", placeholder: "", rows: "10", cols: "50" }),
-        React.createElement("input", { type: "hidden", name: "_csrf", value: "{{csrfToken}}" }),
+        React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
         React.createElement("input", { "class": "formSubmit", type: "submit", value: "Post Now" })
     );
 };
@@ -95,84 +104,119 @@ var handleDelete = function handleDelete(e, csrf, domo) {
     return false;
 };
 
-var DomoList = function DomoList(props) {
-    if (props.domos.length === 0) {
+// const DomoList = (props) => {
+//     if(props.domos.length === 0) {
+//         return (
+//             <div className="domoList">
+//                 <h3 className="emptyDomo">No Domos yet</h3>
+//             </div>
+//         );
+//     }
+
+
+//     const domoNodes = props.domos.map(function(domo) {
+//         // console.log(`domoList props: ${props.csrf}`);
+//         return(
+//             <div key={domo._id} className="domo">
+//                 <img src="/assets/img/domoface.jpeg" alt="domo face" className="domoFace"/>
+//                 <h3 className="domoName"> Name: {domo.name} </h3>
+//                 <h3 className="domoAge"> Age: {domo.age} </h3>
+//                 <h3 className="domoFood"> Favorite Food: {domo.favoriteFood} </h3>
+//                 <form id={`${domo.name}DeleteForm`} onSubmit={(e) => handleDelete(e, props.csrf, domo)} action="/deleteDomo" method="POST">
+//                     <input type="hidden" name="domoID" value={domo._id}/>
+//                     <input type="hidden" name="_csrf" value={props.csrf}/>
+//                     <input type="submit" value="Delete Domo"/>
+//                 </form>
+//             </div>
+//         );
+//     });
+
+//     return (
+//         <div className="domoList">
+//             {domoNodes}
+//         </div>
+//     );
+// };
+
+var PostsList = function PostsList(props) {
+    if (props.posts.length === 0) {
         return React.createElement(
             "div",
-            { className: "domoList" },
+            { className: "postList" },
             React.createElement(
                 "h3",
-                { className: "emptyDomo" },
-                "No Domos yet"
+                { className: "emptyPost" },
+                "No Posts yet"
             )
         );
     }
 
-    var domoNodes = props.domos.map(function (domo) {
-        // console.log(`domoList props: ${props.csrf}`);
+    var postNodes = props.posts.map(function (post) {
+        // console.log(`postList props: ${props.csrf}`);
         return React.createElement(
             "div",
-            { key: domo._id, className: "domo" },
-            React.createElement("img", { src: "/assets/img/domoface.jpeg", alt: "domo face", className: "domoFace" }),
+            { key: post._id, className: "post" },
             React.createElement(
                 "h3",
-                { className: "domoName" },
-                " Name: ",
-                domo.name,
-                " "
+                { "class": "postTitle" },
+                post.title
             ),
             React.createElement(
                 "h3",
-                { className: "domoAge" },
-                " Age: ",
-                domo.age,
-                " "
+                { "class": "postOwner" },
+                "By: ",
+                post.ownerName
+            ),
+            React.createElement(
+                "p",
+                { "class": "postContent" },
+                post.createdDate
             ),
             React.createElement(
                 "h3",
-                { className: "domoFood" },
-                " Favorite Food: ",
-                domo.favoriteFood,
-                " "
+                { "class": "postDate" },
+                post.content
             ),
             React.createElement(
                 "form",
-                { id: domo.name + "DeleteForm", onSubmit: function onSubmit(e) {
-                        return handleDelete(e, props.csrf, domo);
-                    }, action: "/deleteDomo", method: "POST" },
-                React.createElement("input", { type: "hidden", name: "domoID", value: domo._id }),
+                { id: post.title + "DeleteForm", onSubmit: function onSubmit(e) {
+                        return handleDelete(e, props.csrf, post);
+                    }, action: "/deletePost", method: "POST" },
+                React.createElement("input", { type: "hidden", name: "postID", value: post._id }),
                 React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
-                React.createElement("input", { type: "submit", value: "Delete Domo" })
+                React.createElement("input", { type: "submit", value: "Delete Post" })
             )
         );
     });
 
     return React.createElement(
         "div",
-        { className: "domoList" },
-        domoNodes
+        { className: "postList" },
+        postNodes
     );
 };
 
-var AccountPostsList = function AccountPostsList(props) {};
+// const loadDomosFromServer = (csrf) => {
+//     // console.log(`Loading domos froms server. token=${csrf} caller=${caller}`);
+//     sendAjax("GET", "/getDomos", null, (data) => {
+//         ReactDOM.render(
+//             <DomoList csrf={csrf} domos={data.domos} />, document.querySelector("#domos")
+//         );
+//     });
+// };
 
-var AllPostsList = function AllPostsList(props) {};
-
-var loadDomosFromServer = function loadDomosFromServer(csrf) {
-    // console.log(`Loading domos froms server. token=${csrf} caller=${caller}`);
-    sendAjax("GET", "/getDomos", null, function (data) {
-        ReactDOM.render(React.createElement(DomoList, { csrf: csrf, domos: data.domos }), document.querySelector("#domos"));
+var loadPostsFromServer = function loadPostsFromServer(csrf) {
+    sendAjax("GET", "/getPosts", null, function (data) {
+        ReactDOM.render(React.createElement(PostsList, { csrf: csrf, posts: data.posts }), document.querySelector("#posts"));
     });
 };
 
-var loadPostsFromServer = function loadPostsFromServer(csrf) {};
-
 var setup = function setup(csrf) {
-    ReactDOM.render(React.createElement(DomoForm, { csrf: csrf }), document.querySelector("#makeDomo"));
+    ReactDOM.render(React.createElement(PostForm, { csrf: csrf }), document.querySelector("#makePost"));
 
-    ReactDOM.render(React.createElement(DomoList, { csrf: csrf, domos: [] }), document.querySelector("#domos"));
+    ReactDOM.render(React.createElement(PostsList, { csrf: csrf, posts: [] }), document.querySelector("#posts"));
 
-    loadDomosFromServer(csrf);
+    loadPostsFromServer(csrf);
 };
 
 var getToken = function getToken() {
