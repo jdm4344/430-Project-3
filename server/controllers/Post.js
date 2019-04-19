@@ -13,7 +13,7 @@ const makerPage = (req, res) => {
   });
 };
 
-// Handles submission of 
+// Handles submission of
 const makePost = (req, res) => {
   if (!req.body.title || !req.body.content) {
     return res.status(400).json({ error: 'Both title and content are required' });

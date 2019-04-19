@@ -15,6 +15,10 @@ const handleDomo = (e, csrf) => {
     return false;
 };
 
+const handlePost = (e, csrf) => {
+
+};
+
 const DomoForm = (props) => {
     // console.log(`domoForm props: ${props.csrf}`);
 
@@ -36,6 +40,10 @@ const DomoForm = (props) => {
           <input className="makeDomoSubmit" type="submit" value="Make Domo"/>
         </form>
     );
+};
+
+const PostForm = (props) => {
+
 };
 
 // Sends a POST request to the server to delete a specific domo
@@ -90,6 +98,14 @@ const DomoList = (props) => {
     );
 };
 
+const AccountPostsList = (props) => {
+
+};
+
+const AllPostsList = (props) => {
+
+};
+
 const loadDomosFromServer = (csrf) => {
     // console.log(`Loading domos froms server. token=${csrf} caller=${caller}`);
     sendAjax("GET", "/getDomos", null, (data) => {
@@ -97,6 +113,10 @@ const loadDomosFromServer = (csrf) => {
             <DomoList csrf={csrf} domos={data.domos} />, document.querySelector("#domos")
         );
     });
+};
+
+const loadPostsFromServer = (csrf) => {
+
 };
 
 const setup = (csrf) => {

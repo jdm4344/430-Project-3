@@ -17,6 +17,8 @@ var handleDomo = function handleDomo(e, csrf) {
     return false;
 };
 
+var handlePost = function handlePost(e, csrf) {};
+
 var DomoForm = function DomoForm(props) {
     // console.log(`domoForm props: ${props.csrf}`);
 
@@ -53,6 +55,8 @@ var DomoForm = function DomoForm(props) {
         React.createElement("input", { className: "makeDomoSubmit", type: "submit", value: "Make Domo" })
     );
 };
+
+var PostForm = function PostForm(props) {};
 
 // Sends a POST request to the server to delete a specific domo
 var handleDelete = function handleDelete(e, csrf, domo) {
@@ -131,12 +135,18 @@ var DomoList = function DomoList(props) {
     );
 };
 
+var AccountPostsList = function AccountPostsList(props) {};
+
+var AllPostsList = function AllPostsList(props) {};
+
 var loadDomosFromServer = function loadDomosFromServer(csrf) {
     // console.log(`Loading domos froms server. token=${csrf} caller=${caller}`);
     sendAjax("GET", "/getDomos", null, function (data) {
         ReactDOM.render(React.createElement(DomoList, { csrf: csrf, domos: data.domos }), document.querySelector("#domos"));
     });
 };
+
+var loadPostsFromServer = function loadPostsFromServer(csrf) {};
 
 var setup = function setup(csrf) {
     ReactDOM.render(React.createElement(DomoForm, { csrf: csrf }), document.querySelector("#makeDomo"));
