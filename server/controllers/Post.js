@@ -9,7 +9,7 @@ const makerPage = (req, res) => {
       return res.status(400).json({ error: 'An error occurred' });
     }
 
-    console.log("makerPage()");
+    console.log('makerPage()');
 
     return res.render('app', { csrfToken: req.csrfToken(), posts: docs });
   });
@@ -53,7 +53,7 @@ const deletePost = (req, res) => {
   }
 
   console.dir(req.body._csrf);
-  
+
   return Post.PostModel.deletePost(req.body.postID, (err, docs) => {
     if (err) {
       console.log(err);

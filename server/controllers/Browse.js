@@ -3,8 +3,8 @@ const models = require('../models');
 const Post = models.Post;
 
 const getAllPosts = (request, response) => {
-  req = request;
-  res = response;
+  const req = request;
+  const res = response;
 
   Post.PostModel.getAllPosts((err, docs) => {
     if (err) {
@@ -20,8 +20,8 @@ const getAllPosts = (request, response) => {
 
 // Renders the browse page with all posts from the server
 const browsePage = (request, response) => {
-  req = request;
-  res = response;
+  const req = request;
+  const res = response;
 
   Post.PostModel.getAllPosts((err, docs) => {
     if (err) {
@@ -29,7 +29,7 @@ const browsePage = (request, response) => {
       return res.status(400).json({ error: 'An error occurred' });
     }
 
-    console.dir("browsePage()");
+    console.dir('browsePage()');
 
     return res.render('browse', { csrfToken: req.csrfToken(), posts: docs });
   });

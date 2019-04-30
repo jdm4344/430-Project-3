@@ -109,7 +109,7 @@ const changePassword = (request, response) => {
       } else if (!account) {
         return res.status(401).json({ message: 'Account not found' });
       }
-      // return res.status(200).json({ message: 'Account found' });
+      return res.status(200).json({ message: 'Account found' });
     });
 
   // Hash new password
@@ -120,8 +120,8 @@ const changePassword = (request, response) => {
   return res.json({ redirect: '/maker', message: 'Password updated' });
 };
 
-const getInfo = (req, res) => {
-  
+const getInfo = () => {
+
 };
 
 const getToken = (request, response) => {
