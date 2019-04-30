@@ -1,5 +1,5 @@
-const handleError = (messate) => {
-    $("#errorMessage").text(messate);
+const handleError = (message) => {
+    $("#errorMessage").text(message);
     $("#messageBox").animate({width:"toggle"}, 350);
 };
 

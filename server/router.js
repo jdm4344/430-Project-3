@@ -10,16 +10,16 @@ const router = (app) => {
   app.post('/signup', mid.requiresSecure, mid.requiresLogout, controllers.Account.signup);
   app.get('/logout', mid.requiresLogin, controllers.Account.logout);
   app.get('/maker', mid.requiresLogin, controllers.Post.makerPage);
-  app.post('/maker', mid.requiresLogin, controllers.Post.make);
-  // app.post('/deleteDomo', mid.requiresLogin, controllers.Domo.delete);
-  
-  app.get('/browse', mid.requiresSecure, controllers.Browse.displayPosts);
+  app.post('/maker', mid.requiresLogin, controllers.Post.make);  
+  app.get('/browse', mid.requiresSecure, controllers.Browse.browsePage);
+  app.get('/getAllPosts', mid.requiresSecure, controllers.Browse.getAllPosts);
   app.get('/edit', mid.requiresLogin, controllers.Post.editPage);
   app.post('/edit', mid.requiresLogin, controllers.Post.editPost);
   app.get('/account', mid.requiresLogin, controllers.Account.accountPage);
   app.post('/change', mid.requiresLogin, controllers.Account.changePassword);
   app.post('/deletePost', mid.requiresLogin, controllers.Post.deletePost);
-  app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
+  app.get('/info', mid.requiresLogin, controllers.Account.getInfo);
+  app.get('/', mid.requiresSecure, controllers.Browse.browsePage);
 };
 
 module.exports = router;

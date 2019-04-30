@@ -9,6 +9,8 @@ const makerPage = (req, res) => {
       return res.status(400).json({ error: 'An error occurred' });
     }
 
+    console.log("makerPage()");
+
     return res.render('app', { csrfToken: req.csrfToken(), posts: docs });
   });
 };
@@ -50,6 +52,8 @@ const deletePost = (req, res) => {
     return res.status(400).json({ error: 'An error occurred' });
   }
 
+  console.dir(req.body._csrf);
+  
   return Post.PostModel.deletePost(req.body.postID, (err, docs) => {
     if (err) {
       console.log(err);
@@ -84,13 +88,13 @@ const getPosts = (request, response) => {
       return res.status(400).json({ error: 'An error occurred' });
     }
 
-    return res.json({ domos: docs });
+    return res.json({ posts: docs });
   });
 };
 
 module.exports.makerPage = makerPage;
 module.exports.make = makePost;
-module.exports.getPosts  = getPosts;
+module.exports.getPosts = getPosts;
 module.exports.editPage = editPage;
 module.exports.editPost = editPost;
 module.exports.deletePost = deletePost;

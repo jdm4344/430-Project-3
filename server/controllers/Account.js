@@ -109,7 +109,7 @@ const changePassword = (request, response) => {
       } else if (!account) {
         return res.status(401).json({ message: 'Account not found' });
       }
-      return res.status(200).json({ message: 'Account found' });
+      // return res.status(200).json({ message: 'Account found' });
     });
 
   // Hash new password
@@ -117,7 +117,11 @@ const changePassword = (request, response) => {
     Account.AccountModel.changePassword(req.session.account.username, salt, hash);
   });
 
-  return res.status(200).json({ message: 'Password updated' });
+  return res.json({ redirect: '/maker', message: 'Password updated' });
+};
+
+const getInfo = (req, res) => {
+  
 };
 
 const getToken = (request, response) => {
@@ -138,3 +142,4 @@ module.exports.signup = signup;
 module.exports.getToken = getToken;
 module.exports.accountPage = accountPage;
 module.exports.changePassword = changePassword;
+module.exports.getInfo = getInfo;

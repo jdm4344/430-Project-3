@@ -82,6 +82,21 @@ AccountModel.findByUsername(username, (err, doc) => {
   });
 });
 
+// Handles submission of a new password for a user
+AccountSchema.statics.changePassword = (username, salt, password) => {
+  AccountModel.findOneAndUpdate(
+    { username },
+    { $set: { salt, password } },
+    (err) => {
+      if (err) {
+        console.log(err);
+        return false;
+      }
+      return true;
+    }
+  );
+};
+
 AccountModel = mongoose.model('Account', AccountSchema);
 
 module.exports.AccountModel = AccountModel;
