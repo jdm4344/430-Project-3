@@ -1,6 +1,6 @@
 const models = require('../models');
 
-const Post = models.Post;
+const { Post } = models;
 
 const makerPage = (req, res) => {
   Post.PostModel.findByOwner(req.session.account._id, (err, docs) => {

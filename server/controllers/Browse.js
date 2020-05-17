@@ -1,6 +1,6 @@
 const models = require('../models');
 
-const Post = models.Post;
+const { Post } = models;
 
 const getAllPosts = (request, response) => {
   const req = request;
